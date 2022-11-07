@@ -1,0 +1,103 @@
+# Package Overview
+package_name: regression_model
+
+# Data Files
+training_data_file: CarPrice_db.csv
+test_data_file: test_set.csv
+
+# Variables
+# The variable we are attempting to predict (price)
+target: price
+
+pipeline_name: regression_model
+pipeline_save_file: regression_model_output_v
+
+# set train/test split
+test_size: 0.3
+
+# to set the random seed
+random_state: 0
+
+alpha: 0.001
+
+features:
+  - symboling
+  - CarName
+  - fueltype
+  - aspiration
+  - doornumber
+  - carbody
+  - drivewheel
+  - wheelbase
+  - carlength
+  - carwidth
+  - carheight
+  - curbweight
+  - cylindernumber
+  - enginesize
+  - fuelsystem
+  - boreratio
+  - stroke
+  - compressionratio
+  - horsepower
+  - peakrpm
+  - citympg
+  - highwaympg
+
+dropped_in_split:
+  - car_ID # unneeded
+  - enginelocation # quasi-constant
+  - enginetype # contains NaN/infinity value after scaling
+  - price
+
+remap_vars:
+  - symboling
+
+car_var: CarName
+
+binary_vars:
+  - fueltype
+  - aspiration
+
+non_binary_vars:
+  - CarName
+  - carbody
+  - drivewheel
+  - cylindernumber
+  - fuelsystem
+
+cat_vars:
+  - fueltype
+  - aspiration
+  - CarName
+  - carbody
+  - drivewheel
+  - cylindernumber
+  - fuelsystem
+
+scaled_features:
+  - symboling
+  - CarName
+  - carbody
+  - drivewheel
+  - wheelbase
+  - carlength
+  - carwidth
+  - carheight
+  - curbweight
+  - cylindernumber
+  - enginesize
+  - fuelsystem
+  - boreratio
+  - stroke
+  - compressionratio
+  - horsepower
+  - peakrpm
+  - citympg
+  - highwaympg
+
+dropped_features:
+  - stroke
+  - compressionratio
+  - peakrpm
+  - doornumber
