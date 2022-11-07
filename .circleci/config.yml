@@ -100,7 +100,7 @@ workflows:
             branches:
               only:
                 - master
-      # upload after git tags are created
+      # upload after git tags are created..
       # make sure to checkout to master branch on CLI..
       # ..before adjusting model version and pushing
       - test_and_upload_regression_model:
