@@ -58,3 +58,17 @@ def remove_old_pipelines(*, files_to_keep: t.List[str]) -> None:
     for model_file in TRAINED_MODEL_DIR.iterdir():
         if model_file.name not in do_not_delete:
             model_file.unlink()
+
+
+def save_test_predictions(*, pred_to_persist) -> None:
+    """
+    Persists the test predictions from the current model
+    so they can be compared with predictions from new
+    models in differential testing.
+    """
+    save_file = "test_predictions.csv"
+    do_not_delete = ["__init__.py", "CarPrice_db.csv", "test_set.csv"]
+    for dataset_file in DATASET_DIR.iterdir():
+        if dataset_file.name not in do_not_delete:
+            dataset_file.unlink()
+    pd.Series(pred_to_persist).to_csv(f"{DATASET_DIR}/{save_file}", index=False)

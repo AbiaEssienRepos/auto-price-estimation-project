@@ -2,6 +2,8 @@ import numpy as np
 
 from regression_model.predict import make_prediction
 
+# from regression_model.processing.data_manager import save_test_predictions
+
 
 def test_make_prediction(sample_input_data):
     # Given
@@ -18,3 +20,7 @@ def test_make_prediction(sample_input_data):
     assert result.get("errors") is None
     assert len(predictions) == expected_no_predictions
     assert round(predictions[0]) == expected_first_prediction_value
+    print(type(predictions))
+
+    # save the predictions
+    # save_test_predictions(pred_to_persist=predictions)
