@@ -25,8 +25,6 @@ def run_training() -> None:
 
     # fit model
     price_pipe.fit(X_train, y_train)
-    pred = price_pipe.predict(X_test)
-    print(pred[0])
 
     # persist trained model
     save_pipeline(pipeline_to_persist=price_pipe)
