@@ -29,7 +29,7 @@ fetch_data: &fetch_data
       ./scripts/fetch_kaggle_dataset.sh
 
 jobs:
-  test_model:
+  model_tests:
     <<: *defaults
     working_directory: ~/project/ci-and-publishing/model-package
     steps:
@@ -37,7 +37,7 @@ jobs:
           path: ~/project
       - *prepare_tox
       - run:
-          name: Test the model
+          name: Testing the model
           command: |
             tox
 
@@ -53,23 +53,16 @@ jobs:
           command: |
             tox
 
-  differential_tests:
+  differential_test:
     <<: *defaults
+    working_directory: ~/project/ci-and-publishing/model-package
     steps:
       - checkout
       - *prepare_venv
       - run:
-          name: Capturing previous model predictions
+          name: Comparing model predictions
           command: |
-            . venv/bin/activate
-            pip install -r packages/ml_api/diff_test_requirements.txt
-            PYTHONPATH=./packages/ml_api python3 packages/ml_api/tests/capture_model_predictions.py
-      - run:
-          name: Runnning differential tests
-          command: |
-            . venv/bin/activate
-            pip install -r packages/ml_api/requirements.txt
-            py.test -vv packages/ml_api/tests -m differential
+            tox -e test_prediction_difference
 
   deploy_app_container_in_heroku:
     <<: *defaults
@@ -122,10 +115,13 @@ workflows:
   version: 2
   pipeline:
     jobs:
-      - test_model
+      - model_tests:
+      - differential_test:
+          requires:
+          - model_tests
       - test_app:
           requires:
-          - test_model
+          - differential_test
       - deploy_app_container_in_heroku:
           requires:
             - test_app
