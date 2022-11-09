@@ -115,7 +115,7 @@ workflows:
   version: 2
   pipeline:
     jobs:
-      - model_tests:
+      - model_tests
       - differential_test:
           requires:
           - model_tests
