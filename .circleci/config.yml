@@ -117,12 +117,8 @@ workflows:
   pipeline:
     jobs:
       - model_tests
-      - differential_tests:
-          requires:
-          - model_tests
-      - app_tests:
-          requires:
-          - differential_tests
+      - differential_tests
+      - app_tests
       - deploy_app_container_in_heroku:
           requires:
             - app_tests
