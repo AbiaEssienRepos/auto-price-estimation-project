@@ -122,7 +122,7 @@ workflows:
           - model_tests
       - app_tests:
           requires:
-          - differential_test
+          - differential_tests
       - deploy_app_container_in_heroku:
           requires:
             - app_tests
